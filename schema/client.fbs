@@ -1,27 +1,33 @@
 namespace MyNamespace;
 
-enum Gender: byte {
-    Male: 0,
-    Female: 1
+enum Gender:byte {
+    Male= 0,
+    Female= 1
 }
 
-table Person {
+//table Person {
+//    name: string;
+//    age: ushort;
+//    weight: float;
+//    gender: Gender;
+//}
+
+// table Group {
+//    groupname: string;
+//    age: float;
+//    weight: float;
+//    members: [string];
+//}
+
+// union Client { Person, Group }
+
+table Client {
     name: string;
-    age: ushort;
-    weight: float;
-    gender: Gender;
-}
-
-table Group {
-    groupName: string;
-    age: float;
-    weight: float;
-    members: [string];
-}
-
-union Client {
-    Person,
-    Group
+    age:float;
+    weight:float;
+    gender:Gender;
+    members:[string];
+    type:bool = false;
 }
 
 
