@@ -32,7 +32,7 @@ def binaryToGroup(client):
     print('GroupName: {}, Age: {}, Weight: {}, Members: {}'.format(groupname, age, weight, nameList))
 
 if __name__ == "__main__":
-    filename = "client_data.bin"
+    # filename = "client_data.bin"
     if len(sys.argv) < 2:
         print("Insufficient arguments")
     else:
