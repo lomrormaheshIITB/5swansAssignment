@@ -75,8 +75,9 @@ void PersonToBinary(string filename) {
     auto person_age = 21;
     auto person_weight = 76.5;
     auto person_gender = Gender::Gender_Male;
+    auto type = false;
 
-    auto orc = CreateClient(builder, person_name, person_age, person_weight, person_gender, 0, false);
+    auto orc = CreateClient(builder, person_name, person_age, person_weight, person_gender, 0, type);
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Person is successfully created!\n");
@@ -90,8 +91,9 @@ void GroupToBinary(string filename) {
     auto group_age = 24.5;
     auto group_w = 66;
     auto member_vec = builder.CreateVectorOfStrings({"Ram", "Shyam", "Raghuveer"});
+    auto type = true;
 
-    auto orc = CreateClient(builder, group_name, group_age, group_w, Gender_Male, member_vec, true);
+    auto orc = CreateClient(builder, group_name, group_age, group_w, Gender_Male, member_vec, type);
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Group is successfully created!\n");
