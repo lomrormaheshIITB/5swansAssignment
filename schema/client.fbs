@@ -21,6 +21,9 @@ enum Gender:byte {
 
 // union Client { Person, Group }
 
+// type = false :-> Person 
+// type = true :-> Group
+
 table Client {
     name: string;
     age:float;
