@@ -53,8 +53,8 @@ typedef struct Group {
     }
 } Group;
 
-void writeToFile(flatbuffers::FlatBufferBuilder& builder) {
-    auto filename = "client_data.bin";
+
+void writeToFile(flatbuffers::FlatBufferBuilder& builder, string filename) {
     ofstream file(filename, ios::binary);
     if(file.is_open()) {
         const uint8_t* buffer_data = builder.GetBufferPointer();
@@ -63,13 +63,13 @@ void writeToFile(flatbuffers::FlatBufferBuilder& builder) {
         file.write(reinterpret_cast<const char*>(buffer_data), buffer_size);
         file.close();
 
-        printf("Flatbuffer data written to %s\n", filename);
+        printf("Flatbuffer data is written to %s\n", filename);
     } else {
         printf("Failed to open the file %s for writing\n", filename);
     }
 }
 
-void PersonToBinary() {
+void PersonToBinary(string filename) {
     flatbuffers::FlatBufferBuilder builder;
     auto person_name = builder.CreateString("Ram");
     auto person_age = 21;
@@ -80,13 +80,11 @@ void PersonToBinary() {
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Person is successfully created!\n");
-
-    writeToFile(builder);
+    writeToFile(builder, filename);
 }
 
 
-
-void GroupToBinary() {
+void GroupToBinary(string filename) {
     flatbuffers::FlatBufferBuilder builder;
     auto group_name = builder.CreateString("FightClub");
     auto group_age = 24.5;
@@ -97,28 +95,24 @@ void GroupToBinary() {
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Group is successfully created!\n");
-
-    auto filename = "client_data.fb";
-    ofstream file(filename, ios::binary);
-    if(file.is_open()) {
-        const uint8_t* buffer_data = builder.GetBufferPointer();
-        int buffer_size = builder.GetSize();
-
-        file.write(reinterpret_cast<const char*>(buffer_data), buffer_size);
-        file.close();
-
-        printf("Flatbuffer data written to %s\n", filename);
-    } else {
-        printf("Failed to open the file %s for writing\n", filename);
-    }
-
-
+    writeToFile(builder, filename);
 }
 
 
-int main(int /*argc*/, const char* /*argv*/[]) {
-    PersonToBinary();
-    
+int main(int argc, char* argv[]) {
+
+    if(argc<2) {
+        printf("Insufficient arguments");
+        return 0;
+    }
+
+    string filename = reinterpret_cast<string>(argv[1]);  // "client_data.bin";
+    int type = 0;
+    if(argc>2) type = reinterpret_cast<int>(argv[2]);
+    if(type == 0) PersonToBinary(filename);
+    else GroupToBinary(filename);
+
+    return 0;
 }
 
 
