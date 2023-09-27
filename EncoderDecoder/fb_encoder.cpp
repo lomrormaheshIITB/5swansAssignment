@@ -63,9 +63,9 @@ void writeToFile(flatbuffers::FlatBufferBuilder& builder, string filename) {
         file.write(reinterpret_cast<const char*>(buffer_data), buffer_size);
         file.close();
 
-        printf("Flatbuffer data is written to %s\n", filename);
+        printf("Flatbuffer data is written to %s\n", filename.c_str());
     } else {
-        printf("Failed to open the file %s for writing\n", filename);
+        printf("Failed to open the file %s for writing\n", filename.c_str());
     }
 }
 
@@ -108,9 +108,9 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    string filename = reinterpret_cast<string>(argv[1]);  // "client_data.bin";
+    string filename = argv[1];  // "client_data.bin";
     int type = 0;
-    if(argc>2) type = reinterpret_cast<int>(argv[2]);
+    if(argc>2) type = stoi(argv[2]);
     if(type == 0) PersonToBinary(filename);
     else GroupToBinary(filename);
 

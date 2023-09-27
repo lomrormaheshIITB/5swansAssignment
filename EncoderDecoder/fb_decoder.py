@@ -27,8 +27,8 @@ def binaryToGroup(client):
     groupname = client.Name()
     age = client.Age()
     weight = client.Weight()
-    nameList = list(client.Members())
-    print(f'Client: Group')
+    nameList = [client.Members(i).decode('utf-8') for i in range(client.MembersLength())]
+    print('Client: Group')
     print('GroupName: {}, Age: {}, Weight: {}, Members: {}'.format(groupname, age, weight, nameList))
 
 if __name__ == "__main__":
