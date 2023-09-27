@@ -5,7 +5,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
+#include "../flatbuffers/include/flatbuffers/base.h"
+#include "../flatbuffers/include/flatbuffers/array.h"
+#include "../flatbuffers/include/flatbuffers/flatbuffers.h"
 #include "../flatbuffers/client_generated.h"
 
 using namespace std;
@@ -49,6 +53,22 @@ typedef struct Group {
     }
 } Group;
 
+void writeToFile(flatbuffers::FlatBufferBuilder& builder) {
+    auto filename = "client_data.bin";
+    ofstream file(filename, ios::binary);
+    if(file.is_open()) {
+        const uint8_t* buffer_data = builder.GetBufferPointer();
+        int buffer_size = builder.GetSize();
+
+        file.write(reinterpret_cast<const char*>(buffer_data), buffer_size);
+        file.close();
+
+        printf("Flatbuffer data written to %s\n", filename);
+    } else {
+        printf("Failed to open the file %s for writing\n", filename);
+    }
+}
+
 void PersonToBinary() {
     flatbuffers::FlatBufferBuilder builder;
     auto person_name = builder.CreateString("Ram");
@@ -60,7 +80,11 @@ void PersonToBinary() {
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Person is successfully created!\n");
+
+    writeToFile(builder);
 }
+
+
 
 void GroupToBinary() {
     flatbuffers::FlatBufferBuilder builder;
@@ -73,6 +97,22 @@ void GroupToBinary() {
     builder.Finish(orc);
 
     printf("The FlatBuffer for Client Group is successfully created!\n");
+
+    auto filename = "client_data.fb";
+    ofstream file(filename, ios::binary);
+    if(file.is_open()) {
+        const uint8_t* buffer_data = builder.GetBufferPointer();
+        int buffer_size = builder.GetSize();
+
+        file.write(reinterpret_cast<const char*>(buffer_data), buffer_size);
+        file.close();
+
+        printf("Flatbuffer data written to %s\n", filename);
+    } else {
+        printf("Failed to open the file %s for writing\n", filename);
+    }
+
+
 }
 
 
