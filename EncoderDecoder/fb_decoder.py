@@ -23,10 +23,24 @@ def binaryToPerson(client):
     print(f'Client: Person')
     print('Name: {}, Age: {}, Weight:{}, Gender: {}'.format(name, age, weight, getGender(gender)))
 
-
+def binaryToGroup(client):
+    groupname = client.Name()
+    age = client.Age()
+    weight = client.Weight()
+    nameList = list(client.Members())
+    print(f'Client: Group')
+    print('GroupName: {}, Age: {}, Weight: {}, Members: {}'.format(groupname, age, weight, nameList))
 
 if __name__ == "__main__":
     filename = "client_data.bin"
-    buffer_data = read_file(filename)
-    client = Client.Client.GetRootAsClient(buffer_data, 0)
-    binaryToPerson(client)
+    if len(sys.argv) < 2:
+        print("Insufficient arguments")
+    else:
+        filename = sys.argv[1]
+        buffer_data = read_file(filename)
+        client = Client.Client.GetRootAsClient(buffer_data, 0)
+
+        if client.Type():
+            binaryToGroup(client)
+        else:
+            binaryToPerson(client)
